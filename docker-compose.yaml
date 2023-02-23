@@ -1,4 +1,31 @@
-
-from: keymetrics/pm2
-
-
+version: "3.9"
+services:
+  dolfje:
+    build: dolfje
+    depends_on:
+      dolfdb:
+        condition: service_healthy
+    environment:
+      - SLACK_SIGNING_SECRET=${SLACK_SIGNING_SECRET}
+      - SLACK_BOT_TOKEN=${SLACK_BOT_TOKEN}
+      - MNOT_ADMIN_PASS=${MNOT_ADMIN_PASS}
+      - APPLANG=${APPLANG}
+      - REG_CHANNEL=${REG_CHANNEL}
+      - DB_HOST=${DB_HOST}
+      - DB_USER=${DB_USER}
+      - DB_PASS=${DB_PASS}
+      - DB_DATABASE=${DB_DATABASE}
+  dolfdb:
+    build: dolfdb
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_DATABASE=${DB_DATABASE} 
+      - MYSQL_USER=${DB_USER}
+      - MYSQL_PASSWORD=${DB_PASS} 
+      - MYSQL_ROOT_PASSWORD=${DB_ROOT_PASS}
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3306"]
+      interval: 30s
+      timeout: 10s
+      retries: 8
