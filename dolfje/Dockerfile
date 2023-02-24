@@ -7,4 +7,6 @@ WORKDIR /root/dolfje
 
 RUN npm install dotenv localizify @slack/bolt mysql2
 
+EXPOSE 6262
+
 CMD ["index.js"]
