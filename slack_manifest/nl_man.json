@@ -1,0 +1,98 @@
+{
+  "/wwikdoemee": {
+    "description": "Tijdens de registratie periode kunnen spelers zich inschrijven met dit commando.",
+    "example": ""
+  },
+  "/wwikkijkmee": {
+    "description": "Spelers die mee willen kijken met het spel kunnen zich aanmelden om mee te kijken met dit commando.",
+    "example": ""
+  },
+  "/wwikdoenietmeermee": {
+    "description": "Tijdens de registratie periode kunnen spelers zich uitschrijven met dit commando.",
+    "example": ""
+  },
+  "/wwkanaal": {
+    "description": "Start een kanaal en nodigt automatisch alle vertellers en Dolfje uit. ",
+    "example": "[naam van het nieuwe kanaal]"
+  },
+  "/wwnodigvertellersuit": {
+    "description": "Nodigt iedereen met de rol van verteller in het kanaal waar je dit commando uitvoert uit.",
+    "example": ""
+  },
+  "/wwnodigspelersuit": {
+    "description": "Nodigt iedereen in het spel uit, om vergissingen met nodigvertellersuit te voorkomen moet dit bevestigd worden met ikweethetzeker.",
+    "example": "ikweethetzeker"
+  },
+  "/wwlijst": {
+    "description": "Geeft een lijst van iedereen in het huidige kanaal.",
+    "example": "(public)"
+  },
+  "/wwregels": {
+    "description": "Laat de huidige regels zien.",
+    "example": "(public)"
+  },
+  "/wwstartvluchtigestemronde": {
+    "description": "Maakt een stemming aan die niet opgeslagen wordt in de database. De stemming kan door iedereen worden aangemaakt en door iedereen worden gesloten.",
+    "example": ""
+  },
+  "/wwlotto": {
+    "description": "Dolfje geeft stemadvies. Dolfje kiest een willekeurige nog levende speler, dat kan je dus ook zelf zijn!",
+    "example": "(public)"
+  },
+  "/wwstatus": {
+    "description": "Geeft de huidige status van het spel weer en geeft aan in welke spellen jij actief bent (als verteller, speler of sectator).",
+    "example": "(public)"
+  },
+  "/wwsamenvatting": {
+    "description": "Geeft een samenvatting van het kanaal waar het commando wordt uitgevoerd.",
+    "example": "[datum] / [datum van] [datum tot]"
+  },
+  "/wwhelp": {
+    "description": "Stuurt een DM met de help tekst.",
+    "example": ""
+  },
+  "/wwstartregistratie": {
+    "description": "Het spel begint altijd met het openen van de registratie.",
+    "example": "[wachtwoord] blind [mogelijke reanimatie spelers (0 = nee, 1 =ja)]"
+  },
+  "/wwstartspel": {
+    "description": "Dit be\u00ebindigt de registratie periode en start het spel.",
+    "example": "[naam van het spel] [aantal spelers] [naam van het hoofdkanaal]"
+  },
+  "/wwstartstemronde": {
+    "description": "Start de stemronde, dit commando moet uitgevoerd worden in het stemlokaal.",
+    "example": "([naam van de stemming])"
+  },
+  "/wwstemherinnering": {
+    "description": "Tijdens een stemronde kan er een stemherinnering verstuurd worden.",
+    "example": "[eindtijd]"
+  },
+  "/wwstopstemronde": {
+    "description": "Stopt de huidige stemronde. Dit commando moet uitgevoerd worden in het stemlokaal.",
+    "example": ""
+  },
+  "/wwdood": {
+    "description": "Dit commando markeert een speler als dood.",
+    "example": "@user"
+  },
+  "/wwreanimeer": {
+    "description": "Dit commando markeert een speler als levend.",
+    "example": "@user"
+  },
+  "/wwextraverteller": {
+    "description": "Voegt een extra verteller toe.",
+    "example": "@user"
+  },
+  "/wwstopspel": {
+    "description": "Stopt het spel en opent het keuze menu voor alle kanalen in het stemhok.",
+    "example": "[wachtwoord] [spelnaam] j"
+  },
+  "/wwarchiveren": {
+    "description": "Archiveert alle kanalen die zijn gerelateerd aan het spel.",
+    "example": "[wachtwoord] [naam van het spel]"
+  },
+  "/wwverdeelrollen": {
+    "description": "Verdeelt de rollen. Dit commando vereist de rollen als argumenten. Je moet afsluiten met de standaard rol zonder aantal of met een flexibel aantal.",
+    "example": "[rol:Aantal] [rol:minAantal-maxAantal]"
+  }
+}
