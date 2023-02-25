@@ -5,7 +5,7 @@ RUN apk update && apk add git &&\
     apk del git
 WORKDIR /root/dolfje
 
-RUN npm install dotenv localizify @slack/bolt mysql2
+RUN npm install
 
 EXPOSE 6262
 
