@@ -1,2 +1,4 @@
 .env
 letsencrypt
+slack_manifest/slack_manifest.yml
+.idea
