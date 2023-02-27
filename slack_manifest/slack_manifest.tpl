@@ -10,12 +10,15 @@ oauth_config:
   scopes:
     bot:
       - app_mentions:read
+      - channels:history
+      - channels:manage
+      - chat:write
+      - chat:write.public
       - commands
       - groups:write
-      - chat:write
-      - mpim:write
       - im:write
-      - chat:write.public
+      - mpim:write
+      - users:read
 settings:
   event_subscriptions:
     request_url: $event_url
