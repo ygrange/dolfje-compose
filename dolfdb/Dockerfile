@@ -1,8 +1,9 @@
 FROM mariadb:latest
 
-ADD https://raw.githubusercontent.com/decentaur/dolfje/master/wwmnot.sql /docker-entrypoint-initdb.d
-RUN chmod 644 /docker-entrypoint-initdb.d/wwmnot.sql
-RUN apt -y update && apt install -y curl && rm -rf /var/lib/apt/lists/*
+ADD https://raw.githubusercontent.com/decentaur/dolfje/master/wwmnot.sql /docker-entrypoint-initdb.d/01-wwmnot.sql
+ADD init_databasecontent.sql /docker-entrypoint-initdb.d/99-init_databasecontent.sql
+
+RUN chmod 644 /docker-entrypoint-initdb.d/*.sql
 
 EXPOSE 3306
 
