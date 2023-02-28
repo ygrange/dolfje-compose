@@ -1,92 +1,53 @@
 # dolfje-compose
 
-
-
-## Getting started
-
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
-
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
-
-## Add your files
-
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
-
-```
-cd existing_repo
-git remote add origin https://git.astron.nl/grange/dolfje-compose.git
-git branch -M main
-git push -uf origin main
-```
-
-## Integrate with your tools
-
-- [ ] [Set up project integrations](https://git.astron.nl/grange/dolfje-compose/-/settings/integrations)
-
-## Collaborate with your team
-
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Automatically merge when pipeline succeeds](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
-
-## Test and Deploy
-
-Use the built-in continuous integration in GitLab.
-
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing(SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
-
-***
-
-# Editing this README
-
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thank you to [makeareadme.com](https://www.makeareadme.com/) for this template.
-
-## Suggestions for a good README
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
-
-## Name
-Choose a self-explaining name for your project.
-
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
-
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
-
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
-
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+## Dolfje
+Dolfje a the bot that can be used to play werewolves in a slack space. It has been developed for the MNOT Weerwolven slack. You can find the source code [here|https://github.com/decentaur/dolfje]. We wanted to deploy this bot on the ASTRON slack as a remote fun activity for the SDC team. To do this, we wrapped the bot in a docker-compose file and wrote a (python) script to generate a slack manifest file to make deploying the bot as easy as possible.  
 
 ## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
+*Prerequisites*: A node that will run the bot. The node is expected to be facing the Internet so that slack can communicate with it. Since the slack is using docker compose, the node should be run a Docker deamon and be able to either run `docker-compose` or have te `compose` plugin for Docker installed.
 
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
+Also it is required that you are allowed to install apps for a slack space. By default all full members can install apps, but this can be limited by the owners and admins of the space. 
 
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
+The docker-compose file contains the bot, together with its database, and runs the [Traefik|traefik.io] reverse proxy, using the ACME client to automatically manage a TLS certificate for the service. 
+
+### Creating the manifest and the Slack app
+The first step to take is to generate a `manifest`, which is a YAML or JSON file describing all properties of the app (e.g. what rights it has in the slack space, what information slack should send to it) so that the app can easily be created on the slack site. In this repository, there is a `python3` script that can be used to generate a YAML manifest. 
+
+To generate the manifest, go to the `slack_manifest` directory. The `make_manifest.py` script takes two command-line arguments: the langugage (`en` or `nl`) and the root URL of the bot (so if you deploy the bot) and execute the script. For instance, if you are planning to execute the bot on URL `https://werewolf.example.com` and want all the commands and descriptions in English, the syntax would be
+```
+./make_manifest.py en https://werewolf.example.com
+```
+. After executing this command (and assuming it did not throw an exception), you will find a file `slack_manifest.yml` in the directory containing all information needed to proceeed. 
+
+The slack app needs to be set up in the slack API. The procedure is as follows:
+1. In your browser, go to [https://api.slack.com] and click on "Your Apps" (top-right). 
+2. Click the (green) "Create New App" button.
+3. Click on "From an App manifest".
+4. Pick the workspace in which you will be usng Dolfje, click Next.
+5. At the top of the edit box, click on `YAML` and paste the contents of the `slack_manifest.yml` we just created, click Next.
+6. Check all the data (if you want), and click Create.
+
+This will bring you to the `Basic Information` page. If you scroll down, there will be a box with a `Signing Secret`. The secred in that box (which you can show and copy) is one of the configuratbles that needs to be added to the `.env` file (see below). A bit below you will find a "Display Information" section where you can upload a profile picture to make you bot even more recognisable in your slack space (and a textual description).
+
+If you were to go to your slacp space, you would notice the bot to not be present. This s because the bot has not yet been 'installed'. Please note that every time you change the claims / rights your bot needs to access, you will have to repeat this step (in general, the slack app management pages will explicitly tell you to do this). But now we need to install the app, which will also provide us with the `OAuth token` that we will need to put in the `.env` file (see below).
+
+Click `Oauth & Permission` in the menu on the left. On the page, find `OAuth Tokens for Your Workspace` and click `Install to Workspace`. Now, click `Allow` and upon return, the page will have a box containing the `Oauth token` in the `Bot User OAuth Token` box.
+
+### Running the bot code
+Now on the node where the bot will actually run, go to the root directoryu of this repository. You will have to create an environment file. If you use an older version of docker compose (which does _not support_ the `--env-file` flag) this file has to be called `.env`. In the file `example.env` you will find the parameters that you are expected to provide. You can get the `SLACK_SIGNING_SECRET` from the Basic Information page, as mentioned before. The `SLACK_BOT_TOKEN` will take the value of the `Oauth token`. The `APPLANG` is either `en` or `nl` depending on the languate you want the app in (note that some error messages are only implemented in Dutch, so expect some Dutch in the english version). The `SLACK_URL` is the root URL of the bot. The other parameters can be chosen by the user and are described in the example file.
+
+Bringing up the bot is then either
+```
+docker compose --env-file slack_environment.env up -d
+```
+(where the env file is called `slack_environment.env`)
+or
+```
+docker-compose up -d
+```
+(where the env file has to be called `.env`)
+
+Now you are set to go.
 
 ## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
-
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
-
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
-
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
-
-## License
-For open source projects, say how it is licensed.
-
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+If you have comments on this repository, please open an issue in the issue tracker corresponding to the repository. If you want to provide code please submit a pull request on Github (https://www.github.com/ygrange/dolfje-deploy).
