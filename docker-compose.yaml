@@ -15,7 +15,7 @@ services:
       - "443:443"
       - "8080:8080"
     volumes:
-      - "./letsencrypt:/letsencrypt"
+      - "dolfjes_crypt:/letsencrypt"
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
 
   dolfje:
@@ -34,7 +34,7 @@ services:
       - DB_PASS=${DB_PASS}
       - DB_DATABASE=${DB_DATABASE}
     volumes:
-      - ./datadbase_dir:/var/lib/mysql
+      - "dolfjes_data:/var/lib/mysql"
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.dolfje.rule=Host(`${SLACK_URL}`)"
@@ -53,3 +53,6 @@ services:
       interval: 30s
       timeout: 10s
       retries: 5
+volumes:
+  dolfjes_data:
+  dolfjes_crypt:
