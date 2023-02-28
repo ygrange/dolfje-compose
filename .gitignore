@@ -1,4 +1,5 @@
 .env
 letsencrypt
+datadbase_dir
 slack_manifest/slack_manifest.yml
 .idea
