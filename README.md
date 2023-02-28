@@ -1,5 +1,5 @@
 # dolfje-compose
-
+[![Project Status: Inactive – The project has reached a stable, usable state but is no longer being actively developed; support/maintenance will be provided as time allows.](https://www.repostatus.org/badges/latest/inactive.svg)](https://www.repostatus.org/#inactive)
 ## Dolfje
 Dolfje a the bot that can be used to play werewolves in a slack space. It has been developed for the MNOT Weerwolven slack. You can find the source code [here|https://github.com/decentaur/dolfje]. We wanted to deploy this bot on the ASTRON slack as a remote fun activity for the SDC team. To do this, we wrapped the bot in a docker-compose file and wrote a (python) script to generate a slack manifest file to make deploying the bot as easy as possible.  
 
