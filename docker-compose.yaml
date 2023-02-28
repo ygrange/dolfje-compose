@@ -33,6 +33,8 @@ services:
       - DB_USER=${DB_USER}
       - DB_PASS=${DB_PASS}
       - DB_DATABASE=${DB_DATABASE}
+    volumes:
+      - /datadbase_dir:/var/lib/mysql
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.dolfje.rule=Host(`${SLACK_URL}`)"
