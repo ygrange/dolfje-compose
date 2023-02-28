@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import json
 import sys
@@ -38,7 +38,7 @@ manifest_command_template = Template(
       url: $event_url
       description: "$description"
       usage_hint: "$example"
-      should_escape: false
+      should_escape: true
 """
 )
 
