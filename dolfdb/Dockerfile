@@ -5,5 +5,6 @@ ADD init_databasecontent.sql /docker-entrypoint-initdb.d/99-init_databasecontent
 
 RUN chmod 644 /docker-entrypoint-initdb.d/*.sql
 
+CMD ["--explicit_defaults_for_timestamp=OFF"]
 EXPOSE 3306
 
