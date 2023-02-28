@@ -35,7 +35,7 @@ services:
       - DB_DATABASE=${DB_DATABASE}
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.dolfje.rule=Host(`weerdolfje.duckdns.org`)"
+      - "traefik.http.routers.dolfje.rule=Host(`${SLACK_URL}`)"
       - "traefik.http.routers.dolfje.entrypoints=websecure"
       - "traefik.http.routers.dolfje.tls.certresolver=myresolver"
     restart: unless-stopped
